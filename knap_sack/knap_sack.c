@@ -3,6 +3,11 @@
 #include <time.h>
 
 
+int* weights; // weights of each item
+int* values; // values of each item
+int w = 100; // max weight in knap sack
+int n = 10; // number of total items to choose from
+
 void print_array(int *array) {
     int i;
     for (i = 0; i < n-1; i++) {
@@ -13,7 +18,7 @@ void print_array(int *array) {
 
 void set_0(int *array) {
     int i;
-    for (i = 0; i < n-1; i++) {
+    for (i = 0; i < n; i++) {
         array[i] = 0;
     }
 }
@@ -34,6 +39,16 @@ int countup_sack_value(int *knap_sack) {
     return total;
 }
 
+int countup_sack_weight(int *knap_sack) {
+    int total = 0;
+    for (int i = 0; i < n; i++) {
+        if (knap_sack[i] == 1) {
+            total += weights[i];
+        }
+    }
+    return total;
+}
+
 int max(int a, int b) {
     if (a > b) {
         return a;
@@ -47,44 +62,37 @@ given a sack of items with each item having a weight
 and a value, find the most value that you can put
 in your knap sack without exceeding its weight limit w.
 Then return an array of each item (index) in the knap sack
+
+curr_item is the index representing the current item
+*curr_knap_sack is a pointer to an array where 1 represents
+    an item in the knap sack and 0 represents an item not in the knapsack
 */
-void knap_sack_recursive(int *ret, int curr_item, int *curr_knap_sack) {
-    if (curr_item >= n) {
-        // TODO return the knapsack
+int knap_sack_recursive(int curr_item, int *curr_knap_sack) {
+    // base case
+    if (curr_item == n) {
+        int weight = countup_sack_weight(curr_knap_sack);
+        if (weight > w) { 
+            return -1;
+        } else {
+            int value = countup_sack_value(curr_knap_sack);
+            return value;
+        }
     }
-    int new_ks[n]
-    cp_array(curr_knap_sack, new_ks, n);
-    new_ks[curr_item] = 1;
-    new_ks_weight = countup_sack_value(new_ks);
-    if (new_ks_weight > w) {
-        knap_sack_recursive(
-    }
+    // recursive step
 
+    // add item to sack
+    int add_curr_item[n];
+    cp_array(curr_knap_sack, add_curr_item);
+    add_curr_item[curr_item] = 1;
+    int val1 = knap_sack_recursive(curr_item + 1, add_curr_item);
 
-    
+    // don't add item to sack
+    int dont_add[n];
+    cp_array(curr_knap_sack, dont_add);
+    int val2 = knap_sack_recursive(curr_item + 1, dont_add);
 
+    return max(val1, val2);
 }
-/*
-(return_val, current_item, current_knap_sack)
-if current_item == n:
-    return_val = current_knap_sack
-    return;
-
-potential_knap_sack = current_knap_sack + current item
-if potential_knap_sack.weight > w:
-    knap_sack_recursive(return_val, current_item+1, current_knap_sack)
-else:
-    max (
-        ksr(return_val, current_item+1, current_knap_sack),
-        ksr(return_val, current_item+1, curr_ks + curr_item)
-    )
-return the knapsack with the best value
-*/
-
-int* weights; // weights of each item
-int* values; // values of each item
-int w = 20; // max weight in knap sack
-int n = 10; // number of total items to choose from
 
 int main() {
     srand(time(NULL)); // set random seed
@@ -98,15 +106,16 @@ int main() {
         int a = rand() % (max - min + 1) + min;
         weights[i] = a;
         int b = rand() % (max - min + 1) + min;
-        value[i] = b;
+        values[i] = b;
     }
     printf("weights\n");
-    print_array(weights, n);
+    print_array(weights);
     printf("value\n");
-    print_array(value, n);
-    int ret[n];
-    knap_sack_recursive(ret, weights, value, w, n);
-
+    print_array(values);
+    int starting_knap_sack[n];
+    set_0(starting_knap_sack);
+    int max_value = knap_sack_recursive(0, starting_knap_sack);
+    printf("max_value: %d\n", max_value);
 
     return 0;
 }
