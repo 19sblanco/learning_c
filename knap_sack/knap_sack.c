@@ -67,9 +67,10 @@ curr_item is the index representing the current item
 *curr_knap_sack is a pointer to an array where 1 represents
     an item in the knap sack and 0 represents an item not in the knapsack
 */
-int knap_sack_recursive(int curr_item, int *curr_knap_sack) {
+int knap_sack_recursive(int *ret_sack, int curr_item, int *curr_knap_sack) {
     // base case
     if (curr_item == n) {
+        cp_array(curr_knap_sack, ret_sack);
         int weight = countup_sack_weight(curr_knap_sack);
         if (weight > w) { 
             return -1;
@@ -79,19 +80,29 @@ int knap_sack_recursive(int curr_item, int *curr_knap_sack) {
         }
     }
     // recursive step
+    int ret1[n];
+    int ret2[n];
 
     // add item to sack
     int add_curr_item[n];
     cp_array(curr_knap_sack, add_curr_item);
     add_curr_item[curr_item] = 1;
-    int val1 = knap_sack_recursive(curr_item + 1, add_curr_item);
+    int val1 = knap_sack_recursive(ret1, curr_item + 1, add_curr_item);
 
     // don't add item to sack
     int dont_add[n];
     cp_array(curr_knap_sack, dont_add);
-    int val2 = knap_sack_recursive(curr_item + 1, dont_add);
+    int val2 = knap_sack_recursive(ret2, curr_item + 1, dont_add);
 
-    return max(val1, val2);
+    // return max(val1, val2);
+    int best = max(val1, val2);
+    if (best == val1) {
+        cp_array(ret1, ret_sack);
+        return val1;
+    } else {
+        cp_array(ret2, ret_sack);
+        return val2;
+    }
 }
 
 int main() {
@@ -114,8 +125,11 @@ int main() {
     print_array(values);
     int starting_knap_sack[n];
     set_0(starting_knap_sack);
-    int max_value = knap_sack_recursive(0, starting_knap_sack);
+    int ret_sack[n];
+    int max_value = knap_sack_recursive(ret_sack, 0, starting_knap_sack);
     printf("max_value: %d\n", max_value);
+    printf("knap_sack: ");
+    print_array(ret_sack);
 
     return 0;
 }
