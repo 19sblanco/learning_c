@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include "lib.h"
 
+void prepare_memo(int n, int w, int **memo) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < w; j++) {
+            memo[i][j] = 0;
+        }
+    }
+}
+
 void print_array(int n, int *array) {
     int i;
     for (i = 0; i < n-1; i++) {
@@ -62,15 +70,16 @@ curr_item is the index representing the current item
 */
 int knap_sack_recursive(int *ret_sack, int curr_item, int *curr_knap_sack, int *weights, int *values, int w, int n) {
     // base case
+    // stop early
+    int weight = countup_sack_weight(n, curr_knap_sack, weights);
+    if (weight > w) { 
+        return -1;
+    }
+    // check end
     if (curr_item == n) {
         cp_array(n, curr_knap_sack, ret_sack);
-        int weight = countup_sack_weight(n, curr_knap_sack, weights);
-        if (weight > w) { 
-            return -1;
-        } else {
-            int value = countup_sack_value(n, curr_knap_sack, values);
-            return value;
-        }
+        int value = countup_sack_value(n, curr_knap_sack, values);
+        return value;
     }
     // recursive step
     int ret1[n];
@@ -96,4 +105,19 @@ int knap_sack_recursive(int *ret_sack, int curr_item, int *curr_knap_sack, int *
         cp_array(n, ret2, ret_sack);
         return val2;
     }
+}
+
+/*
+knap sack using dynamic programming
+*/
+int knap_sack_dynamic(int *weights, int *values, int w, int n) {
+    int memo[n][w]; // items, capacity
+    prepare_memo(n, w, memo);
+    int value = knap_sack_dynamic_helper(weights, values, w, n, memo, w, ?);
+    return value;
+
+}
+
+int knap_sack_dynamic_helper(int *weights, int *values, int w, int n, int **memo, int capacity, int curr_item) {
+
 }

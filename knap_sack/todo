@@ -1,2 +1,4 @@
-you now return the value and the knap sack
-you have to test now
+you just did the tests
+now make the knap sack problem faster by not continuing the recursion after its no longer possible
+(weight is past the limit)
+
