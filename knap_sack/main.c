@@ -22,10 +22,8 @@ int main() {
     print_array(n, weights);
     printf("value\n");
     print_array(n, values);
-    int starting_knap_sack[n];
-    set_0(n, starting_knap_sack);
     int ret_sack[n];
-    int max_value = knap_sack_recursive(ret_sack, 0, starting_knap_sack, weights, values, w, n);
+    int max_value = knap_sack_recursive(ret_sack, weights, values, n, w);
     printf("max_value: %d\n", max_value);
     printf("knap_sack: ");
     print_array(n, ret_sack);

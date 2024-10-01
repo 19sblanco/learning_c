@@ -22,10 +22,8 @@ void ks_test0() {
     weights[0] = 1;
     values[0] = 1;
 
-    int starting_knap_sack[n];
-    set_0(n, starting_knap_sack);
     int ret_sack[n];
-    int max_value = knap_sack_recursive(ret_sack, 0, starting_knap_sack, weights, values, w, n);
+    int max_value = knap_sack_recursive(ret_sack, weights, values, n, w);
     
     int expected_sack[1] = {0};
     int expected_value = 0;
@@ -44,10 +42,8 @@ void ks_test1() {
     int weights[3] = {2, 2, 3};
     int values[3] = {2, 2, 3};
 
-    int starting_knap_sack[n];
-    set_0(n, starting_knap_sack);
     int ret_sack[n];
-    int max_value = knap_sack_recursive(ret_sack, 0, starting_knap_sack, weights, values, w, n);
+    int max_value = knap_sack_recursive(ret_sack, weights, values, n, w);
     
     int expected_sack[3] = {1, 1, 0};
     int expected_value = 4;
@@ -67,10 +63,8 @@ void ks_test2() {
     int weights[4] = {1, 1, 1, 1};
     int values[4] = {1, 1, 1, 1};
 
-    int starting_knap_sack[n];
-    set_0(n, starting_knap_sack);
     int ret_sack[n];
-    int max_value = knap_sack_recursive(ret_sack, 0, starting_knap_sack, weights, values, w, n);
+    int max_value = knap_sack_recursive(ret_sack, weights, values, n, w);
     
     int expected_sack[4] = {1, 1, 1, 1};
     int expected_value = 4;
@@ -89,10 +83,9 @@ void ks_test3() {
     int weights[10] = {100, 1, 1, 1, 1, 1, 1, 1, 1, 1};
     int values[10] = {100, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 
-    int starting_knap_sack[n];
-    set_0(n, starting_knap_sack);
+
     int ret_sack[n];
-    int max_value = knap_sack_recursive(ret_sack, 0, starting_knap_sack, weights, values, w, n);
+    int max_value = knap_sack_recursive(ret_sack, weights, values, n, w);
     
     int expected_sack[10] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     int expected_value = 100;
@@ -111,10 +104,9 @@ void ks_test4() {
     int weights[10] = {100, 1, 1, 1, 1, 1, 1, 1, 1, 1};
     int values[10] = {100, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 
-    int starting_knap_sack[n];
-    set_0(n, starting_knap_sack);
+
     int ret_sack[n];
-    int max_value = knap_sack_recursive(ret_sack, 0, starting_knap_sack, weights, values, w, n);
+    int max_value = knap_sack_recursive(ret_sack, weights, values, n, w);
     
     int expected_sack[10] = {0, 1, 1, 1, 1, 1, 1, 1, 1, 1};
     int expected_value = 9;
@@ -128,23 +120,9 @@ void ks_test4() {
 
 void ks_dymanic_test0() {
     printf("===  ks_dymanic_test0 ===\n");
-    int n = 10;
-    int w = 99;
-    int weights[10] = {100, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-    int values[10] = {100, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 
-    int starting_knap_sack[n];
-    set_0(n, starting_knap_sack);
-    int ret_sack[n];
-    int max_value = knap_sack_recursive(ret_sack, 0, starting_knap_sack, weights, values, w, n);
     
-    int expected_sack[10] = {0, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-    int expected_value = 9;
-    if (test_equal(n, expected_sack, ret_sack) && expected_value == max_value) {
-        printf("Correct!\n");
-    } else {
-        printf("Incorrect :(");
-    }
+
     printf("=== ===\n");
 
 }

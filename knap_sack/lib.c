@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "lib.h"
 
-void prepare_memo(int n, int w, int **memo) {
+// void prepare_memo(int n, int w, int **memo) {
+void prepare_memo(int n, int w, int (*memo)[w]) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < w; j++) {
             memo[i][j] = 0;
@@ -68,7 +69,15 @@ curr_item is the index representing the current item
 *curr_knap_sack is a pointer to an array where 1 represents
     an item in the knap sack and 0 represents an item not in the knapsack
 */
-int knap_sack_recursive(int *ret_sack, int curr_item, int *curr_knap_sack, int *weights, int *values, int w, int n) {
+int knap_sack_recursive(int *ret_sack, int *weights, int *values, int n, int w) {
+
+    int starting_knap_sack[n];
+    set_0(n, starting_knap_sack);
+    int value = knap_sack_recursive_helper(ret_sack, 0, starting_knap_sack, weights, values, w, n);
+    return value;
+}
+
+int knap_sack_recursive_helper(int *ret_sack, int curr_item, int *curr_knap_sack, int *weights, int *values, int w, int n) {
     // base case
     // stop early
     int weight = countup_sack_weight(n, curr_knap_sack, weights);
@@ -89,12 +98,12 @@ int knap_sack_recursive(int *ret_sack, int curr_item, int *curr_knap_sack, int *
     int add_curr_item[n];
     cp_array(n, curr_knap_sack, add_curr_item);
     add_curr_item[curr_item] = 1;
-    int val1 = knap_sack_recursive(ret1, curr_item + 1, add_curr_item, weights, values, w, n);
+    int val1 = knap_sack_recursive_helper(ret1, curr_item + 1, add_curr_item, weights, values, w, n);
 
     // don't add item to sack
     int dont_add[n];
     cp_array(n, curr_knap_sack, dont_add);
-    int val2 = knap_sack_recursive(ret2, curr_item + 1, dont_add, weights, values, w, n);
+    int val2 = knap_sack_recursive_helper(ret2, curr_item + 1, dont_add, weights, values, w, n);
 
     // return max(val1, val2);
     int best = max(val1, val2);
@@ -121,25 +130,17 @@ int knap_sack_dynamic(int *weights, int *values, int n, int w) {
     // start @1 bc first row and first col are always 0
     for (int i = 1; i < n; i++) {
         for (int j = 1; j < w; j++) {
-            // curr item = i
-            int curr_item = i;
             int item_weight = weights[i];
             int item_value = values[i];
             int curr_capacity = j;
-            // pick me 
             int pick_me_value = 0;
-                // do i overfill
             if (item_weight > curr_capacity) {
                 pick_me_value = -1;
             } else {
-                // item value + up weight and left 1
                 int value_before_pick = memo[n-1][j-item_weight];
-                int pick_me_value = item_value + value_before_pick;
+                pick_me_value = item_value + value_before_pick;
             }
-            // don't
-            // left 1
             int dont_value = memo[i-1][j];
-            // compare and store value
             if (pick_me_value > dont_value) {
                 memo[i][j] = pick_me_value;
             } else {
