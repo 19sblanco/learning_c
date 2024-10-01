@@ -109,15 +109,43 @@ int knap_sack_recursive(int *ret_sack, int curr_item, int *curr_knap_sack, int *
 
 /*
 knap sack using dynamic programming
+
+memo:
+    items representation: row (i) index into memo
+    capacity representation: col (j) index into memo
 */
-int knap_sack_dynamic(int *weights, int *values, int w, int n) {
+int knap_sack_dynamic(int *weights, int *values, int n, int w) {
     int memo[n][w]; // items, capacity
     prepare_memo(n, w, memo);
-    int value = knap_sack_dynamic_helper(weights, values, w, n, memo, w, ?);
-    return value;
 
-}
-
-int knap_sack_dynamic_helper(int *weights, int *values, int w, int n, int **memo, int capacity, int curr_item) {
-
+    // start @1 bc first row and first col are always 0
+    for (int i = 1; i < n; i++) {
+        for (int j = 1; j < w; j++) {
+            // curr item = i
+            int curr_item = i;
+            int item_weight = weights[i];
+            int item_value = values[i];
+            int curr_capacity = j;
+            // pick me 
+            int pick_me_value = 0;
+                // do i overfill
+            if (item_weight > curr_capacity) {
+                pick_me_value = -1;
+            } else {
+                // item value + up weight and left 1
+                int value_before_pick = memo[n-1][j-item_weight];
+                int pick_me_value = item_value + value_before_pick;
+            }
+            // don't
+            // left 1
+            int dont_value = memo[i-1][j];
+            // compare and store value
+            if (pick_me_value > dont_value) {
+                memo[i][j] = pick_me_value;
+            } else {
+                memo[i][j] = dont_value;
+            }
+        }
+    }
+    return memo[n-1][w-1];
 }

@@ -126,6 +126,29 @@ void ks_test4() {
     printf("=== ===\n");
 }
 
+void ks_dymanic_test0() {
+    printf("===  ks_dymanic_test0 ===\n");
+    int n = 10;
+    int w = 99;
+    int weights[10] = {100, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    int values[10] = {100, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+
+    int starting_knap_sack[n];
+    set_0(n, starting_knap_sack);
+    int ret_sack[n];
+    int max_value = knap_sack_recursive(ret_sack, 0, starting_knap_sack, weights, values, w, n);
+    
+    int expected_sack[10] = {0, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    int expected_value = 9;
+    if (test_equal(n, expected_sack, ret_sack) && expected_value == max_value) {
+        printf("Correct!\n");
+    } else {
+        printf("Incorrect :(");
+    }
+    printf("=== ===\n");
+
+}
+
 
 int main() {
     ks_test0();
