@@ -1,11 +1,23 @@
 #include <stdio.h>
 #include "lib.h"
 
-// void prepare_memo(int n, int w, int **memo) {
 void prepare_memo(int n, int w, int (*memo)[w]) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < w; j++) {
             memo[i][j] = 0;
+        }
+    }
+}
+
+void print_memo(int n, int w, int (*memo)[w]) {
+    printf("capacity\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < w; j++) {
+            if (j != w-1) {
+                printf("%d, ", memo[i][j]);
+            } else {
+                printf("%d\n", memo[i][j]);
+            }
         }
     }
 }
@@ -130,14 +142,14 @@ int knap_sack_dynamic(int *ret_sack, int *weights, int *values, int n, int w) {
     // start @1 bc first row and first col are always 0
     for (int i = 1; i < n+1; i++) {
         for (int j = 1; j < w+1; j++) {
-            int item_weight = weights[i];
-            int item_value = values[i];
+            int item_weight = weights[i-1];
+            int item_value = values[i-1];
             int curr_capacity = j;
             int pick_me_value = 0;
             if (item_weight > curr_capacity) {
                 pick_me_value = -1;
             } else {
-                int value_before_pick = memo[n-1][j-item_weight];
+                int value_before_pick = memo[i-1][j-item_weight];
                 pick_me_value = item_value + value_before_pick;
             }
             int dont_value = memo[i-1][j];
