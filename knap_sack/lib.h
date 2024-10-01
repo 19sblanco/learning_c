@@ -9,4 +9,5 @@ int countup_sack_weight(int n, int *knap_sack, int *weights);
 int max(int a, int b);
 int knap_sack_recursive(int *ret_sack, int *weights, int *values, int n, int w);
 int knap_sack_recursive_helper(int *ret_sack, int curr_item, int *curr_knap_sack, int *weights, int *values, int w, int n);
+int knap_sack_dynamic(int *ret_sack, int *weights, int *values, int n, int w);
 #endif

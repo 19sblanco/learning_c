@@ -1,4 +1,3 @@
-you just did the tests
-now make the knap sack problem faster by not continuing the recursion after its no longer possible
-(weight is past the limit)
-
+you are making tests for the dynamic programming solution
+you first want to check if the value returned is correct
+then work building up the sack contents for your return array

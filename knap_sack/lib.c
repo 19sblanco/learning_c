@@ -123,13 +123,13 @@ memo:
     items representation: row (i) index into memo
     capacity representation: col (j) index into memo
 */
-int knap_sack_dynamic(int *weights, int *values, int n, int w) {
-    int memo[n][w]; // items, capacity
-    prepare_memo(n, w, memo);
+int knap_sack_dynamic(int *ret_sack, int *weights, int *values, int n, int w) {
+    int memo[n+1][w+1]; // items, capacity
+    prepare_memo(n+1, w+1, memo);
 
     // start @1 bc first row and first col are always 0
-    for (int i = 1; i < n; i++) {
-        for (int j = 1; j < w; j++) {
+    for (int i = 1; i < n+1; i++) {
+        for (int j = 1; j < w+1; j++) {
             int item_weight = weights[i];
             int item_value = values[i];
             int curr_capacity = j;
@@ -148,5 +148,5 @@ int knap_sack_dynamic(int *weights, int *values, int n, int w) {
             }
         }
     }
-    return memo[n-1][w-1];
+    return memo[n][w];
 }
