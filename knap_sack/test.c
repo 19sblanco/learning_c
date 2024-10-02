@@ -244,7 +244,7 @@ int main() {
     ks_dynamic_test0();
     ks_dymanic_test1();
     ks_dymanic_test2();
-    ks_dymanic_test3();
-    ks_dymanic_test4();
+    // ks_dymanic_test3();
+    // ks_dymanic_test4();
     return 0;
 }

@@ -71,6 +71,11 @@ int max(int a, int b) {
     }
 }
 
+int mark_in(int n, int position) {
+    n &= 1 << position;
+    return n;
+}
+
 /*
 given a sack of items with each item having a weight
 and a value, find the most value that you can put
@@ -138,6 +143,8 @@ memo:
 int knap_sack_dynamic(int *ret_sack, int *weights, int *values, int n, int w) {
     int memo[n+1][w+1]; // items, capacity
     prepare_memo(n+1, w+1, memo);
+    int visited_memo[n+1][w+1];
+    prepare_memo(n+1, w+1, visited_memo);
 
     // start @1 bc first row and first col are always 0
     for (int i = 1; i < n+1; i++) {
@@ -146,20 +153,30 @@ int knap_sack_dynamic(int *ret_sack, int *weights, int *values, int n, int w) {
             int item_value = values[i-1];
             int curr_capacity = j;
             int pick_me_value = 0;
+            int pick_me_bag = 0;
             if (item_weight > curr_capacity) {
                 pick_me_value = -1;
             } else {
-                int value_before_pick = memo[i-1][j-item_weight];
+                int new_i = i-1;
+                int new_j = j-item_weight;
+                int value_before_pick = memo[new_i][new_j];
                 pick_me_value = item_value + value_before_pick;
+                int old_bag = visited_memo[new_i][new_j];
+                pick_me_bag = mark_in(old_bag, i-1);
             }
             int dont_value = memo[i-1][j];
+            int dont_bag = visited_memo[i-1][j];
             if (pick_me_value > dont_value) {
                 memo[i][j] = pick_me_value;
+                visited_memo[i][j] = pick_me_bag;
             } else {
                 memo[i][j] = dont_value;
+                visited_memo[i][j] = dont_bag;
             }
         }
     }
-    print_memo(n+1, w+1, memo);
+    *ret_sack = visited_memo[n][w];
+    print_memo(n, w, visited_memo);
+    printf("ret_sack: %d\n", *ret_sack);
     return memo[n][w];
 }
