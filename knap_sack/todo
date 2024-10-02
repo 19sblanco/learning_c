@@ -1,6 +1,8 @@
-you are making tests for the dynamic programming solution
-once finished 
-go back and make it return the path as well
+make it return the path as well
+    * use a path memo
+    * where each cell contains a path 
+    * maybe this path can be a int where the 0 bit represents no and the 1 bit represents yes
+    * then see what solution ai uses
 
 Test timing, in main
 
