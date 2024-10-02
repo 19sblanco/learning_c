@@ -118,8 +118,32 @@ void ks_test4() {
     printf("=== ===\n");
 }
 
-void ks_dymanic_test0() {
-    printf("===  ks_dymanic_test0 ===\n");
+
+void ks_dynamic_test0() {
+    printf("=== ks_dynamic_test0 ===\n");
+    int n = 1;
+    int w = 0;
+    int weights[n];
+    int values[n];
+    weights[0] = 1;
+    values[0] = 1;
+
+    int ret_sack[n];
+    int max_value = knap_sack_dynamic(ret_sack, weights, values, n, w);
+    
+    int expected_sack[1] = {0};
+    int expected_value = 0;
+    if (expected_value == max_value) {
+    // if (test_equal(n, expected_sack, ret_sack) && expected_value == max_value) {
+        printf("Correct!\n");
+    } else {
+        printf("Incorrect :(");
+    }
+    printf("=== ===\n");
+}
+
+void ks_dymanic_test1() {
+    printf("===  ks_dymanic_test1 ===\n");
     int n = 3;
     int w = 4;
     int weights[3] = {2, 2, 3};
@@ -141,6 +165,74 @@ void ks_dymanic_test0() {
 
 }
 
+void ks_dymanic_test2() {
+    printf("=== ks_dynamic_2 ===\n");
+    int n = 4;
+    int w = 4;
+    int weights[4] = {1, 1, 1, 1};
+    int values[4] = {1, 1, 1, 1};
+
+    int ret_sack[n];
+    int max_value = knap_sack_dynamic(ret_sack, weights, values, n, w);
+    
+    int expected_sack[4] = {1, 1, 1, 1};
+    int expected_value = 4;
+    if (expected_value == max_value) {
+    // if (test_equal(n, expected_sack, ret_sack) && expected_value == max_value) {
+        printf("Correct!\n");
+    } else {
+        printf("Incorrect :(");
+    }
+    printf("=== ===\n");
+}
+
+void ks_dymanic_test3() {
+    printf("=== ks_dynamic_3 ===\n");
+
+    int n = 10;
+    int w = 100;
+    int weights[10] = {100, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    int values[10] = {100, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+
+
+    int ret_sack[n];
+    int max_value = knap_sack_dynamic(ret_sack, weights, values, n, w);
+    
+    int expected_sack[10] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    int expected_value = 100;
+    if (expected_value == max_value) {
+    // if (test_equal(n, expected_sack, ret_sack) && expected_value == max_value) {
+        printf("Correct!\n");
+    } else {
+        printf("Incorrect :(");
+    }
+
+    printf("=== ===\n");
+}
+
+
+void ks_dymanic_test4() {
+    printf("=== ks_dynamic_4 ===\n");
+    int n = 10;
+    int w = 99;
+    int weights[10] = {100, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    int values[10] = {100, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+
+
+    int ret_sack[n];
+    int max_value = knap_sack_dynamic(ret_sack, weights, values, n, w);
+    
+    int expected_sack[10] = {0, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    int expected_value = 9;
+    if (expected_value == max_value) {
+    // if (test_equal(n, expected_sack, ret_sack) && expected_value == max_value) {
+        printf("Correct!\n");
+    } else {
+        printf("Incorrect :(");
+    }
+    printf("=== ===\n");
+}
+
 
 int main() {
     // ks_test0();
@@ -149,6 +241,10 @@ int main() {
     // ks_test3();
     // ks_test4();
 
-    ks_dymanic_test0();
+    ks_dynamic_test0();
+    ks_dymanic_test1();
+    ks_dymanic_test2();
+    ks_dymanic_test3();
+    ks_dymanic_test4();
     return 0;
 }

@@ -160,5 +160,6 @@ int knap_sack_dynamic(int *ret_sack, int *weights, int *values, int n, int w) {
             }
         }
     }
+    print_memo(n+1, w+1, memo);
     return memo[n][w];
 }
