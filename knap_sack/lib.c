@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "lib.h"
 
+/*
+array operations
+*/
 void prepare_memo(int n, int w, int (*memo)[w]) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < w; j++) {
@@ -71,9 +74,19 @@ int max(int a, int b) {
     }
 }
 
+/*
+binary functions
+*/
 int mark_in(int n, int position) {
-    n &= 1 << position;
+    n |= 1 << position;
     return n;
+}
+
+void printBinary(unsigned int num) {
+    for (int i = 31; i >= 0; i--) {
+        printf("%d", (num >> i) & 1);
+    }
+    printf(" (%u)\n", num);
 }
 
 /*
@@ -162,7 +175,9 @@ int knap_sack_dynamic(int *ret_sack, int *weights, int *values, int n, int w) {
                 int value_before_pick = memo[new_i][new_j];
                 pick_me_value = item_value + value_before_pick;
                 int old_bag = visited_memo[new_i][new_j];
+                // printf("old_bag: %d\n", old_bag);
                 pick_me_bag = mark_in(old_bag, i-1);
+                // printf("pick_me_bag: %d\n", pick_me_bag);
             }
             int dont_value = memo[i-1][j];
             int dont_bag = visited_memo[i-1][j];
@@ -176,7 +191,5 @@ int knap_sack_dynamic(int *ret_sack, int *weights, int *values, int n, int w) {
         }
     }
     *ret_sack = visited_memo[n][w];
-    print_memo(n, w, visited_memo);
-    printf("ret_sack: %d\n", *ret_sack);
     return memo[n][w];
 }
