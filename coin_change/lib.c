@@ -1,7 +1,3 @@
-
-
-
-
 /*
 Given an amount to make change for (cents in our case)
 find the fewest number of coins that will make change for that
@@ -23,5 +19,23 @@ option is better. Because of this unpredictability we'll just have to
 try out all solutions.
 */
 int coin_change(int amount) {
+    if (amount == 0) {
+        return 0;
+    }
+    else if (amount < 0) {
+        return -1;
+    }
 
+    int denominations[3] = {1, 15, 25};
+    int best_so_far = -1;
+    for (int i = 0; i < 3; i++) {
+        int coin = denominations[i];
+        int new_amount = amount - coin;
+        int best = coin_change(new_amount);
+        if (best < best_so_far) {
+            best_so_far = best;
+        }
+    }
+
+    return best_so_far + 1;
 }
