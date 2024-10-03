@@ -1,0 +1,7 @@
+coin_change
+    * input: amount of change in cents
+    * output: smallest number of coins that can be used to make change for input
+
+later:
+
+return an array representing which coins you would need to use
