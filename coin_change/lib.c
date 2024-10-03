@@ -1,3 +1,5 @@
+#include <limits.h>
+
 /*
 Given an amount to make change for (cents in our case)
 find the fewest number of coins that will make change for that
@@ -23,11 +25,11 @@ int coin_change(int amount) {
         return 0;
     }
     else if (amount < 0) {
-        return -1;
+        return INT_MAX;
     }
 
     int denominations[3] = {1, 15, 25};
-    int best_so_far = -1;
+    int best_so_far = INT_MAX;
     for (int i = 0; i < 3; i++) {
         int coin = denominations[i];
         int new_amount = amount - coin;
