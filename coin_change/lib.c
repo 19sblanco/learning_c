@@ -41,3 +41,37 @@ int coin_change(int amount) {
 
     return best_so_far + 1;
 }
+
+void prepare_memo(int *memo, int n) {
+    for (int i = 0; i < n; i++) {
+        memo[i] = 0;
+    }
+}
+
+/*
+what problem are we trying to solve and any necessary background information
+what is the scope of our project, what do we need to do 
+*/
+
+int coin_change_dynamic(int amount) {
+    int denominations[3] = {1, 15, 25};
+    int memo[amount];
+    prepare_memo(memo, amount);
+
+    for (int i = 1; i < amount; i++) {
+        int best = INT_MAX;
+        for (int j = 0; j < 3; j++) {
+            int coin = denominations[i];
+            int prev_i = i - coin;
+            if (prev_i < 0) {
+                continue;
+            }
+            int sub_answer = memo[prev_i];
+            if (sub_answer < best) {
+                best = sub_answer;
+            }
+        }
+        memo[i] = best + 1;
+    }
+    return memo[amount - 1];
+}
