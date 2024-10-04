@@ -6,7 +6,7 @@ void show_results(int test_id, int expected, int got) {
     if (expected == got) {
         ;
     } else {
-        printf("Incorrect!\nExpected: %d\nGot: %d", expected, got);
+        printf("Incorrect!\nExpected: %d\nGot: %d\n", expected, got);
     }
     printf(" === === \n");
 }
@@ -54,11 +54,11 @@ void test_coin_change5() {
 }
 
 
-void test_coin_change_dynamic0() {
+void test_coin_change_dynamic6() {
     int amount = 0;
     int change = coin_change_dynamic(amount);
     int expected = 0;
-    show_results(0, expected, change);
+    show_results(6, expected, change);
 }
 
 
@@ -69,6 +69,6 @@ int main() {
     test_coin_change3();
     test_coin_change4();
     test_coin_change5();
-    test_coin_change_dynamic0();
+    test_coin_change_dynamic6();
     return 0;
 }

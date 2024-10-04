@@ -49,6 +49,7 @@ void prepare_memo(int *memo, int n) {
 }
 
 void print_memo(int *memo, int n) {
+    printf("n: %d\n", n);
     int i;
     for (i = 0; i < n-1; i++) {
         printf("%d, ", memo[i]);
@@ -63,13 +64,13 @@ what is the scope of our project, what do we need to do
 
 int coin_change_dynamic(int amount) {
     int denominations[3] = {1, 15, 25};
-    int memo[amount];
-    prepare_memo(memo, amount);
+    int memo[amount+1];
+    prepare_memo(memo, amount+1);
 
-    for (int i = 1; i < amount; i++) {
+    for (int i = 1; i < amount+1; i++) {
         int best = INT_MAX;
         for (int j = 0; j < 3; j++) {
-            int coin = denominations[i];
+            int coin = denominations[j];
             int prev_i = i - coin;
             if (prev_i < 0) {
                 continue;
@@ -81,6 +82,6 @@ int coin_change_dynamic(int amount) {
         }
         memo[i] = best + 1;
     }
-    print_memo(memo);
-    return memo[amount - 1];
+    print_memo(memo, amount);
+    return memo[amount];
 }
