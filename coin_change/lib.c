@@ -49,7 +49,6 @@ void prepare_memo(int *memo, int n) {
 }
 
 void print_memo(int *memo, int n) {
-    printf("n: %d\n", n);
     int i;
     for (i = 0; i < n-1; i++) {
         printf("%d, ", memo[i]);
@@ -82,6 +81,6 @@ int coin_change_dynamic(int amount) {
         }
         memo[i] = best + 1;
     }
-    print_memo(memo, amount);
+    print_memo(memo, amount+1);
     return memo[amount];
 }
