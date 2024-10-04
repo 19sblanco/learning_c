@@ -54,6 +54,14 @@ void test_coin_change5() {
 }
 
 
+void test_coin_change_dynamic0() {
+    int amount = 0;
+    int change = coin_change_dynamic(amount);
+    int expected = 0;
+    show_results(0, expected, change);
+}
+
+
 int main() {
     test_coin_change0();
     test_coin_change1();
@@ -61,5 +69,6 @@ int main() {
     test_coin_change3();
     test_coin_change4();
     test_coin_change5();
+    test_coin_change_dynamic0();
     return 0;
 }

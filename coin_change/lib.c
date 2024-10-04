@@ -48,6 +48,14 @@ void prepare_memo(int *memo, int n) {
     }
 }
 
+void print_memo(int *memo, int n) {
+    int i;
+    for (i = 0; i < n-1; i++) {
+        printf("%d, ", memo[i]);
+    }
+    printf("%d\n ", memo[i]);
+}
+
 /*
 what problem are we trying to solve and any necessary background information
 what is the scope of our project, what do we need to do 
@@ -73,5 +81,6 @@ int coin_change_dynamic(int amount) {
         }
         memo[i] = best + 1;
     }
+    print_memo(memo);
     return memo[amount - 1];
 }
